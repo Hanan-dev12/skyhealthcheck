@@ -1,0 +1,295 @@
+/* Sky Health Check Modern Redesign CSS */
+
+/* Color Variables */
+:root {
+  --sky-purple: #7c3aed;
+  --sky-blue: #0ea5e9;
+  --sky-pink: #ec4899;
+  --sky-orange: #f97316;
+  --sky-green: #10b981;
+  --sky-red: #ef4444;
+  --sky-amber: #f59e0b;
+  --sky-light: #f3f4f6;
+  --sky-dark: #1f2937;
+  --transition-speed: 0.3s;
+}
+
+/* Base Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--sky-purple), var(--sky-blue));
+  color: #333;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  color: var(--sky-dark);
+  margin-bottom: 1rem;
+}
+
+.container-fluid {
+  padding: 2rem;
+}
+
+/* Navbar */
+.navbar {
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+  height: 45px;
+  transition: transform 0.3s;
+}
+
+.navbar-brand:hover img {
+  transform: scale(1.1);
+}
+
+.nav-link {
+  font-weight: 500;
+  margin-right: 1rem;
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: var(--sky-purple);
+  left: 0;
+  bottom: -5px;
+  transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Cards */
+.card {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Buttons */
+.btn {
+  border-radius: 6px;
+  font-weight: 600;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--sky-purple);
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #6b21a8;
+}
+
+.btn-secondary {
+  background: var(--sky-blue);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #0284c7;
+}
+
+.btn-success {
+  background: var(--sky-green);
+  color: white;
+}
+
+.btn-danger {
+  background: var(--sky-red);
+  color: white;
+}
+
+/* Forms */
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  padding: 12px;
+  transition: box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--sky-purple);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--sky-dark);
+  width: 250px;
+  min-height: 100vh;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.sidebar a {
+  color: white;
+  padding: 12px 20px;
+  display: block;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.sidebar a.active {
+  background: var(--sky-purple);
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+  .main-content {
+    margin-left: 70px;
+  }
+  .sidebar a span {
+    display: none;
+  }
+}
+
+/* Animations */
+.page-transition {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Login & Auth Forms */
+.auth-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  padding: 30px;
+  margin: 40px auto;
+}
+
+.auth-card h2 {
+  color: var(--sky-purple);
+  margin-bottom: 1rem;
+}
+
+.auth-card .form-control {
+  margin-bottom: 1rem;
+}
+
+.auth-card .btn {
+  width: 100%;
+}
+
+/* Vote Traffic Light */
+.traffic-light-option {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 10px;
+  display: inline-block;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.traffic-light-option.red { background: var(--sky-red); }
+.traffic-light-option.amber { background: var(--sky-amber); }
+.traffic-light-option.green { background: var(--sky-green); }
+
+.traffic-light-option:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.traffic-light-option.selected {
+  border: 3px solid white;
+  box-shadow: 0 0 0 4px currentColor;
+}
+
+/* Charts */
+.chart-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+  padding: 20px;
+  margin-bottom: 1.5rem;
+}
+
+/* Progress Bars */
+.progress {
+  height: 10px;
+  border-radius: 5px;
+}
+
+.progress-bar {
+  background: var(--sky-green);
+  transition: width 1s ease;
+}
+
+/* Notifications */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-left: 5px solid var(--sky-purple);
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.5s ease;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
