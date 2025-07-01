@@ -1,0 +1,242 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Department Summary | Sky Health Check{% endblock %}
+
+{% block content %}
+<div class="container-fluid fade-in">
+
+    <h1 class="mb-4">Department Summary</h1>
+
+    <!-- Department and Quarter Selectors -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm slide-in-left">
+                <div class="card-body">
+                    <h5>Select Department</h5>
+                    <select class="form-select" id="department-select">
+                        <option selected disabled>Select Department</option>
+                        {% for department in departments %}
+                        <option value="{{ department.id }}">{{ department.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm slide-in-right">
+                <div class="card-body">
+                    <h5>Select Quarter</h5>
+                    <select class="form-select" id="quarter-select" disabled>
+                        <option selected disabled>Select Quarter</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Department Summary Area -->
+    <div id="department-summary-area" class="d-none">
+        <div class="card shadow-lg slide-in-up mb-4">
+            <div class="card-header bg-gradient text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 id="department-summary-title">Engineering Department - Q1 2025</h5>
+                    <div>
+                        <button class="btn btn-sm btn-danger me-2" id="export-pdf-btn">
+                            <i class="fas fa-file-pdf"></i> Export PDF
+                        </button>
+                        <button class="btn btn-sm btn-warning text-dark" id="export-csv-btn">
+                            <i class="fas fa-file-csv"></i> Export CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row mb-4">
+                    <!-- Health Overview -->
+                    <div class="col-md-6 mb-3">
+                        <h5>Department Health Overview</h5>
+                        <div class="progress mb-3" style="height: 25px;">
+                            <div class="progress-bar bg-success" style="width: 50%;">50% Green</div>
+                            <div class="progress-bar bg-warning text-dark" style="width: 30%;">30% Amber</div>
+                            <div class="progress-bar bg-danger" style="width: 20%;">20% Red</div>
+                        </div>
+
+                        <h5>Department Trend</h5>
+                        <div class="progress mb-3" style="height: 25px;">
+                            <div class="progress-bar bg-success" style="width: 45%;">45% Improving</div>
+                            <div class="progress-bar bg-secondary" style="width: 40%;">40% Stable</div>
+                            <div class="progress-bar bg-danger" style="width: 15%;">15% Declining</div>
+                        </div>
+                    </div>
+
+                    <!-- Department Stats -->
+                    <div class="col-md-6 mb-3">
+                        <h5>Department Statistics</h5>
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p><strong>Total Teams:</strong> 5</p>
+                                <p><strong>Total Engineers:</strong> 45</p>
+                                <p><strong>Participation Rate:</strong> 85%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teams Performance Table -->
+                <h5>Teams Performance</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Team</th>
+                                <th>Green %</th>
+                                <th>Amber %</th>
+                                <th>Red %</th>
+                                <th>Trend</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Alpha Team</td>
+                                <td>60%</td>
+                                <td>30%</td>
+                                <td>10%</td>
+                                <td><span class="badge bg-success">Improving</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary view-team-btn" data-team="Alpha Team">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>Beta Team</td>
+                                <td>45%</td>
+                                <td>35%</td>
+                                <td>20%</td>
+                                <td><span class="badge bg-secondary">Stable</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary view-team-btn" data-team="Beta Team">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>Gamma Team</td>
+                                <td>40%</td>
+                                <td>30%</td>
+                                <td>30%</td>
+                                <td><span class="badge bg-danger">Declining</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary view-team-btn" data-team="Gamma Team">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>Delta Team</td>
+                                <td>55%</td>
+                                <td>25%</td>
+                                <td>20%</td>
+                                <td><span class="badge bg-success">Improving</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary view-team-btn" data-team="Delta Team">View</button></td>
+                            </tr>
+                            <tr>
+                                <td>Epsilon Team</td>
+                                <td>50%</td>
+                                <td>30%</td>
+                                <td>20%</td>
+                                <td><span class="badge bg-secondary">Stable</span></td>
+                                <td><button class="btn btn-sm btn-outline-primary view-team-btn" data-team="Epsilon Team">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Charts -->
+                <h5 class="mt-5">Health Cards Comparison</h5>
+                <div class="chart-container mb-5" style="height: 400px;">
+                    <canvas id="departmentChart"></canvas>
+                </div>
+
+                <h5>Historical Trend</h5>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="departmentTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const departmentSelect = document.getElementById('department-select');
+    const quarterSelect = document.getElementById('quarter-select');
+
+    departmentSelect.addEventListener('change', function() {
+        if (this.value) {
+            quarterSelect.disabled = false;
+            quarterSelect.innerHTML = '<option selected disabled>Select Quarter</option>' +
+                                      '<option value="1">Q1 2025</option>' +
+                                      '<option value="2">Q2 2025</option>' +
+                                      '<option value="3">Q3 2024</option>' +
+                                      '<option value="4">Q4 2024</option>';
+        } else {
+            quarterSelect.disabled = true;
+        }
+    });
+
+    quarterSelect.addEventListener('change', function() {
+        if (this.value) {
+            document.getElementById('department-summary-area').classList.remove('d-none');
+            document.getElementById('department-summary-area').classList.add('fade-in');
+            document.getElementById('department-summary-area').scrollIntoView({ behavior: 'smooth' });
+            initDepartmentChart();
+            initDepartmentTrendChart();
+        }
+    });
+
+    document.querySelectorAll('.view-team-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            alert(`Navigating to ${this.dataset.team} summary page`);
+        });
+    });
+
+    function initDepartmentChart() {
+        const ctx = document.getElementById('departmentChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Code Quality', 'Collaboration', 'Delivery Pace', 'Tech Debt', 'Growth'],
+                datasets: [
+                    { label: 'Green %', data: [60,55,45,40,50], backgroundColor: '#10b981' },
+                    { label: 'Amber %', data: [30,30,35,35,30], backgroundColor: '#f59e0b' },
+                    { label: 'Red %', data: [10,15,20,25,20], backgroundColor: '#ef4444' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { title: { display: true, text: 'Department Health Cards' } },
+                scales: { x: { stacked: true }, y: { stacked: true, max: 100, beginAtZero: true } }
+            }
+        });
+    }
+
+    function initDepartmentTrendChart() {
+        const ctx = document.getElementById('departmentTrendChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025'],
+                datasets: [
+                    { label: 'Green %', data: [35,40,45,48,50], borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', tension: 0.4 },
+                    { label: 'Amber %', data: [40,35,32,30,30], borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,0.1)', tension: 0.4 },
+                    { label: 'Red %', data: [25,25,23,22,20], borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.1)', tension: 0.4 }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { title: { display: true, text: 'Department Health Trend' } },
+                scales: { y: { max: 100, beginAtZero: true } }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
